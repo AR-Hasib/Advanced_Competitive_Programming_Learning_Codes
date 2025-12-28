@@ -1,0 +1,68 @@
+/* https://codeforces.com/problemset/problem/1762/A
+
+An array b is good if the sum of elements of b is even.
+You are given an array a consisting of n positive integers. In one operation, you can select an index i and change a; := [ai/ 2].
+Find the minimum number of operations (possibly 0) needed to make a good. It can be proven that it is always possible to make a good.
+[x] denotes the floor function — the largest integer less than or equal to x. For example, [2.7] = 2, [π] = 3 and [5] = 5.
+
+Input
+Each test contains multiple test cases. The first line contains a single integer t (1 ≤ t ≤ 1000) - the number of test cases. The
+description of the test cases follows.
+The first line of each test case contains a single integer n (1 ≤ n ≤ 50) — the length of the array a.
+The second line of each test case contains n space-separated integers a₁, a2, ..., an (1 ≤ a; ≤ 106) — representing the array a.
+Do note that the sum of n over all test cases is not bounded.
+
+Output
+For each test case, output the minimum number of operations needed to make a good.*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define endl '\n'
+#define int long long
+
+const int MOD = 1e9 + 7;
+const int INF = LLONG_MAX /2;
+
+signed main() {
+    
+    ios::sync_with_stdio(false); cin.tie(NULL);
+    
+    int t; cin >> t;
+    while (t--) {
+        int n; cin>>n;
+        int arr[n], total=0;
+        for(int i=0; i<n; i++){
+            cin>>arr[i];
+            total+=arr[i];
+        } 
+
+        if(total%2==0) cout<<0<<endl;
+        else{
+            int ans=INT_MAX, count=0; bool flag=false;
+            for(int i=0; i<n; i++){
+                if(arr[i]==1 || arr[i]==2){
+                    cout<<1<<endl;
+                    flag= true;
+                    break;
+                }else if(arr[i]%2==0){
+                    while(arr[i]%2==0){
+                        arr[i]/=2;
+                        count++;  
+                    }
+                    ans=min(ans, count);
+                    count=0;
+                }else if(arr[i]%2==1){
+                    while(arr[i]%2==1){
+                        arr[i]/=2;
+                        count++;
+                    }
+                    ans=min(ans, count);
+                    count=0;
+                }
+            } 
+            if(flag == false) cout<<ans<<endl;
+        }
+    }
+    return 0;
+}
